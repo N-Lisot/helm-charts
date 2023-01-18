@@ -12,7 +12,7 @@ the latest versions of the packages.  You can then run `helm search repo
 
 To add the  chart:
 
-    helm add lisot https://n-lisot.github.io/helm-charts/
+    helm repo add lisot https://n-lisot.github.io/helm-charts/
 
 To install the  chart:
 
