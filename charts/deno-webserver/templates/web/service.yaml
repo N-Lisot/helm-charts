@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: {{ .Values.deno.service.name }}
-  name: {{ .Values.deno.service.name }}
+  name: {{ .Values.servicewebserver.name }}
   namespace: default
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: {{ .Values.deno.service.port }}
+    - port: {{ .Values.servicewebserver.port }}
+      protocol: TCP
+      targetPort: {{ .Values.servicewebserver.targetPort }}
   selector:
-    app: {{ .Values.deno.service.name }}
-  type: {{ .Values.deno.service.type }} 
+    app: {{ .Values.servicewebserver.name }}
+  type: {{ .Values.servicewebserver.type }}

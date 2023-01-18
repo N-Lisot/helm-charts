@@ -1,66 +1,59 @@
-maria:
-  pv:
-    - Name: mariadb
-      Size: 8Gi
-      Path: /data/db/
-      PersistentVolumeReclaimPolicy: Retain
-
-  pvc:
-    - Name: data
-      Size: 8Gi
-      VolumeName: mariadb
-
-  app: mariadb
-
-  connexion:
-    user: root
-    password: asecret
-    database: logs
-
-  image: 
-    repository: mariadb:10
-    pullPolicy: Always
-    tag: mariadb
-
-  volumeMount:
-    name: data
-    mountPath: /var/lib/mysql
-
-  volume:
-    name: data
-    clainName: data
-
-  service:
-    name: maria-db
-  
-deno:
-  pv:
-    - Name: deno-server
-      Size: 3Gi
-      Path: /data/deno-server/
-      PersistentVolumeReclaimPolicy: Retain
-
-  pvc:
-    - Name: logs
-      Size: 1Gi
-      VolumeName: deno-server
-
-  volumeMount:
-    name: logs
-    mountPath: /srv/app/pvc
-
-  volume:
-    name: logs
-    claimName: logs
-  
-  service:
-    type: NodePort
-    port: 8080
-    name: deno-webserver
-
-  image:
-    repository: codebuds/deno-webserver:1.3.1
-    pullPlicy: Always
-    tag:
-
+webserver:
   replicaCount: 3
+  image:
+    repository: codebuds/deno-webserver
+    pullPolicy: Always
+    tag: 1.3.1
+  volumeMounts:
+    mountPath: /srv/app/pvc
+    name: logs
+  volumes:
+    name: logs
+    nameClaim: logs
+
+  pv:
+    name: deno-server
+    size: 3Gi
+    path: /data/deno-server
+    persistentVolumeReclaimPolicy: Retain
+
+  pvc:
+    name: logs
+    size: 1Gi
+
+servicewebserver:
+  name: deno-webserver
+  port: 80
+  targetPort: 8080
+  type: NodePort
+
+mariadb:
+  auth:
+    user: dGVzdAo=
+    password: YXNlY3JldA==
+    database: bG9ncw==
+    rootPassword: YXNlY3JldA==
+  image:
+    repository: mariadb
+    pullPolicy: Always
+    tag: latest
+  volumeMounts:
+    mountPath: /var/lib/mysql
+    name: maria-db
+  volumes:
+    name: maria-db
+    nameClaim: maria-db
+
+  pv:
+    name: mariadb
+    size: 10Gi
+    path: /data/maria-db
+    persistentVolumeReclaimPolicy: Retain
+
+  pvc:
+    name: maria-db
+    size: 1Gi
+
+servicemariadb:
+  name: maria-db
+  port: 3306

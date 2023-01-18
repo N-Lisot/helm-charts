@@ -1,34 +1,26 @@
-{{- range $pv := .Values.deno.pv}}
-
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-    name: {{ $pv.Name }}
+    name: {{ .Values.webserver.pv.name }}
 spec:
     accessModes:
         - ReadWriteOnce
-    persistentVolumeReclaimPolicy: {{ $pv.PersistentVolumeReclaimPolicy }}
+    persistentVolumeReclaimPolicy: {{ .Values.webserver.pv.persistentVolumeReclaimPolicy }}
     storageClassName: standard
     capacity:
-        storage: {{ $pv.Size }}
+        storage: {{ .Values.webserver.pv.size }}
     hostPath:
-        path: {{ $pv.PersistentVolumeReclaimPolicy }}
+        path: {{ .Values.webserver.pv.path }}
 
-{{ end }}
 ---
-
-{{- range $pvc := .Values.deno.pvc}}
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: {{ $pvc.Name }}
+    name: {{ .Values.webserver.pvc.name }}
     namespace: default
 spec:
     accessModes:
         - ReadWriteOnce
     resources:
         requests:
-            storage: {{ $pvc.Size }}
-
-{{ end }}
+            storage: {{ .Values.webserver.pv.size }}

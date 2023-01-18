@@ -1,19 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-    name: deno-ingress
-    namespace: default
-    annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$1
+  name: ingress-deno-webserver
 spec:
-    rules:
-        - host: deno.minikube
-          http:
-              paths:
-                  - path: /
-                    pathType: ImplementationSpecific
-                    backend:
-                        service:
-                            name: {{ .Values.deno.service.name }}
-                            port:
-                                number: {{ .Values.deno.service.port }}
+  rules:
+    - host: "deno.minikube"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: deno-webserver
+                port:
+                  number: 80

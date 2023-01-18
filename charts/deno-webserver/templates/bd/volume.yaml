@@ -1,36 +1,26 @@
-
-{{- range $pv := .Values.maria.pv}}
-
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-    name: {{ $pv.Name | default "mariadb" }}
-    namespace: default
+  name: {{ .Values.mariadb.pv.name }}
 spec:
-    accessModes:
-        - ReadWriteOnce
-    persistentVolumeReclaimPolicy: {{ $pv.PersistentVolumeReclaimPolicy | default "Retain" }}
-    storageClassName: standard
-    capacity:
-        storage: {{ $pv.Size | default "8Gi" }}
-    hostPath:
-        path: {{ $pv.Path | default "/data/db/" }}
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: {{ .Values.mariadb.pv.persistentVolumeReclaimPolicy }}
+  storageClassName: standard
+  capacity:
+    storage: {{ .Values.mariadb.pv.size }}
+  hostPath:
+    path: {{ .Values.mariadb.pv.path }}
 
-{{- end }}
 ---
-
-{{- range $pvc := .Values.maria.pvc}}
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: {{ $pvc.Name }}
-    namespace: default
+  name: {{ .Values.mariadb.pvc.name }}
+  namespace: default
 spec:
-    accessModes:
-        - ReadWriteOnce
-    resources:
-        requests:
-            storage: {{ $pvc.Size }}
-
-{{- end }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.mariadb.pvc.size }}
