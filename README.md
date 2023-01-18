@@ -10,10 +10,14 @@ If you had already added this repo earlier, run `helm repo update` to retrieve
 the latest versions of the packages.  You can then run `helm search repo
 ` to see the charts.
 
+To add the  chart:
+
+    helm add lisot https://n-lisot.github.io/helm-charts/
+
 To install the  chart:
 
-    helm install my- /
+    helm install deno-webserver lisot/deno-webserver
 
 To uninstall the chart:
 
-    helm delete my-
+    helm delete deno-webserver
