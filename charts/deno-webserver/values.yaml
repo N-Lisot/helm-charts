@@ -13,8 +13,7 @@ maria:
   app: mariadb
 
   connexion:
-    rootPassword:
-    user:
+    user: root
     password: asecret
     database: logs
 
