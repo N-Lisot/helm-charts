@@ -3,6 +3,16 @@ entries:
   deno-webserver:
   - apiVersion: v2
     appVersion: 1.2.1
+    created: "2023-01-18T13:41:53.581115551Z"
+    description: A Helm chart to generate the deno-web service and mariadb
+    digest: 2e47312f0f09fadfe27d1e547e7f15fd47c4fe415e8e60d7b3d028152adc60f8
+    name: deno-webserver
+    type: application
+    urls:
+    - https://github.com/N-Lisot/helm-charts/releases/download/deno-webserver-0.2.0/deno-webserver-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.2.1
     created: "2023-01-18T13:15:03.50952951Z"
     description: A Helm chart to generate the deno-web service and mariadb
     digest: b98faffa60c620495c96de90d84ef36890b3f0f47ab444a0a281d11be3a9fa66
