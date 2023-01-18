@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.servicemariadb.name }}
+  name: {{ .Release.Name }}-{{ .Values.servicemariadb.name }}
 spec:
   ports:
     - port: {{ .Values.servicemariadb.port }}

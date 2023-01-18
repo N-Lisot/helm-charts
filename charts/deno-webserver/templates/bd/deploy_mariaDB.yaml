@@ -5,7 +5,7 @@ metadata:
     deployment.kubernetes.io/revision: "3"
   labels:
     app: maria-db
-  name: maria-db
+  name: {{ .Release.Name }}-maria-db
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -54,7 +54,7 @@ spec:
             - containerPort: 3306
               name: mysql
           volumeMounts:
-            - name: {{ .Values.mariadb.volumeMounts.name }}
+            - name: {{ .Release.Name }}-{{ .Values.mariadb.volumeMounts.name }}
               mountPath: {{ .Values.mariadb.volumeMounts.mountPath}}
       dnsPolicy: ClusterFirst
       restartPolicy: Always
@@ -62,6 +62,6 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-        - name: {{ .Values.mariadb.volumes.name }}
+        - name: {{ .Release.Name }}-{{ .Values.mariadb.volumes.name }}
           persistentVolumeClaim:
-            claimName: {{ .Values.mariadb.volumes.nameClaim }}
+            claimName: {{ .Release.Name }}-{{ .Values.mariadb.volumes.nameClaim }}
