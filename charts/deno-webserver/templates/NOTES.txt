@@ -1,3 +1,2 @@
 Bonjour si vous êtes sur Windows lancer la commande suivante pour accéder au service web :
-$ minikube service [nomDuService] 
-Par défaut [nomDuService] = deno-webserver
+$ minikube service {{ .Release.Name }}-deno-webserver
