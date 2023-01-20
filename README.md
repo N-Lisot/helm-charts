@@ -23,7 +23,8 @@ To uninstall the chart:
     helm delete deno-webserver
     
     
-Changelog
+# Changelog
+
 deno-webserver:
 
 
