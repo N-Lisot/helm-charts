@@ -27,11 +27,50 @@ spec:
             labels:
                 app: deno-webserver
         spec:
+            securityContext:
+                runAsUser: 1000
+                runAsGroup: 1000
+                fsGroup: 1000
+            initContainers:
+                - name: check-mariadb
+                  image: busybox:1.31
+                  env:
+                    - name: MARIADB_HOST
+                      value: {{ .Release.Name }}-maria-db
+                  command: [
+                            'sh',
+                            '-c',
+                            "echo -e \"check mariadb\"; while ! nc -z $MARIADB_HOST 3306; do sleep 1; printf \"-\"; done; echo -e \" >> bdd ok \";"
+                        ]
+            ####### ne focntionne pas ...
+
             containers:
                 -   image: {{ .Values.webserver.image.repository }}:{{ .Values.webserver.image.tag }}
                     imagePullPolicy: {{ .Values.webserver.image.pullPolicy }}
+                    livenessProbe:
+                        httpGet:
+                            path: /prob?probeType=liveness
+                            path: /prob
+                            port: 80
+                        initialDelaySeconds: 30
+                        periodSeconds: 15
+                    ###### 2eme methode si le httpGet ne focntionne pas 
+                    # livenessProbe:
+                    #     exec:
+                    #         command:
+                    #             - sh
+                    #             - -c
+                    #             - wget --spider localhost:8080
+                    #     initialDelaySeconds: 30
+                    #     periodSeconds: 15
+                    resources:
+                        requests:
+                            memory: "10Mi"
+                            cpu: "150m"
+                        limits:
+                            memory: "1Gi"
+                            cpu: "500m"
                     name: deno-webserver
-                    resources: { }
                     env:
                         - name: MARIADB_HOST
                           value: {{ .Release.Name }}-maria-db
@@ -45,12 +84,6 @@ spec:
                       - name: http
                         containerPort: 8080
                         protocol: TCP
-                    readinessProbe:
-                        initialDelaySeconds: 20
-                        periodSeconds: 60
-                        httpGet:
-                            path: /probe?probeType=readiness
-                            port: http
             dnsPolicy: ClusterFirst
             restartPolicy: Always
             schedulerName: default-scheduler

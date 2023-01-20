@@ -1,2 +1,4 @@
-Bonjour si vous êtes sur Windows lancer la commande suivante pour accéder au service web :
+Bonjour,
+Attendre ~40 seconde puis
+lancer la commande suivante pour accéder au service web :
 $ minikube service {{ .Release.Name }}-deno-webserver

@@ -21,8 +21,21 @@ spec:
       containers:
         - image: {{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}
           imagePullPolicy: {{ .Values.mariadb.image.pullPolicy }}
+          readinessProbe:
+            exec:
+              command:
+                - "./bin/sh"
+                - "-c"
+                - "exec mysqladmin status -uroot -p$MARIADB_ROOT_PASSWORD"
+            initialDelaySeconds: 15
+          resources:
+            requests:
+                memory: "64Mi"
+                cpu: "250m"
+            limits:
+                memory: "128Mi"
+                cpu: "500m"
           name: maria-db
-          resources: {}
           env:
             - name: MARIADB_ROOT_PASSWORD
               valueFrom:
