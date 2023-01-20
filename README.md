@@ -28,17 +28,27 @@ deno-webserver:
 
 
 0.3.0
+
     Add InitContainers 
+    
     Add Readiness probe to maria db
+    
     Add Liveness probe to webserver
 
 0.2.0
+
     Use release variable to create deploy
+    
     Add GitHub action to create release
+    
     Add GitPage
+    
     Change MariaDB to StatefulSet
 
 0.1.0
+
     Create helm chart
+    
     Create deno-webserver
+    
     Create mariadb
