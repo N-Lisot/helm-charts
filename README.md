@@ -27,6 +27,7 @@ Changelog
 deno-webserver:
 
 
+
 0.3.0
 
     Add InitContainers 
@@ -34,6 +35,8 @@ deno-webserver:
     Add Readiness probe to maria db
     
     Add Liveness probe to webserver
+
+0.2.2 FIX 0.2.0
 
 0.2.0
 
@@ -44,6 +47,8 @@ deno-webserver:
     Add GitPage
     
     Change MariaDB to StatefulSet
+
+0.1.1 FIX 0.1.0
 
 0.1.0
 
