@@ -21,11 +21,11 @@ webserver:
     name: logs
     size: 1Gi
 
-servicewebserver:
-  name: deno-webserver
-  port: 80
-  targetPort: 8080
-  type: NodePort
+  service:
+    name: deno-webserver
+    port: 80
+    targetPort: 8080
+    type: NodePort
 
 mariadb:
   auth:

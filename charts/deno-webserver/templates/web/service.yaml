@@ -1,21 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-{{ .Values.servicewebserver.name }}
+  name: {{ .Release.Name }}-{{ .Values.webserver.service.name }}
   namespace: default
 spec:
   ports:
-    - port: {{ .Values.servicewebserver.port }}
+    - port: {{ .Values.webserver.service.port }}
       protocol: TCP
-      targetPort: {{ .Values.servicewebserver.targetPort }}
+      targetPort: {{ .Values.webserver.service.targetPort }}
   selector:
-    app: {{ .Values.servicewebserver.name }}
-  type: {{ .Values.servicewebserver.type }}
-  # type: NodePort
-  # ports:
-  #     - port: 8080
-  #       targetPort: 8080
-  #       protocol: TCP
-  #       name: http
-  # selector:
-  #     app: server
+    app: {{ .Values.webserver.service.name }}
+  type: {{ .Values.webserver.service.type }}

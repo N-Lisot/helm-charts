@@ -21,6 +21,7 @@ spec:
       containers:
         - image: {{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}
           imagePullPolicy: {{ .Values.mariadb.image.pullPolicy }}
+          ## Check status of mariadb
           readinessProbe:
             exec:
               command:
@@ -28,6 +29,7 @@ spec:
                 - "-c"
                 - "exec mysqladmin status -uroot -p$MARIADB_ROOT_PASSWORD"
             initialDelaySeconds: 15
+          ## Resource settings
           resources:
             requests:
                 memory: "64Mi"

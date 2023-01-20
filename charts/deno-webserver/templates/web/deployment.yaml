@@ -27,10 +27,13 @@ spec:
             labels:
                 app: deno-webserver
         spec:
-            securityContext:
-                runAsUser: 1000
-                runAsGroup: 1000
-                fsGroup: 1000
+            ## not working
+            # securityContext:
+            #     runAsUser: 1000
+            #     runAsGroup: 3000
+            #     fsGroup: 2000
+
+            ## start the deployment only if mariadb is reachable
             initContainers:
                 - name: check-mariadb
                   image: busybox:1.31
@@ -42,11 +45,20 @@ spec:
                             '-c',
                             "echo -e \"check mariadb\"; while ! nc -z $MARIADB_HOST 3306; do sleep 1; printf \"-\"; done; echo -e \" >> bdd ok \";"
                         ]
-            ####### ne focntionne pas ...
+            ## not working
+            # initContainers:
+            #     - name: changeowner
+            #       image: busybox:1.31
+            #       command: [
+            #                 'sh',
+            #                 '-c',
+            #                 "chown -R 1000 {{ .Values.webserver.volumeMounts.mountPath }}"
+            #                 ] 
 
             containers:
                 -   image: {{ .Values.webserver.image.repository }}:{{ .Values.webserver.image.tag }}
                     imagePullPolicy: {{ .Values.webserver.image.pullPolicy }}
+                    ## Check pods status
                     livenessProbe:
                         httpGet:
                             path: /prob?probeType=liveness
@@ -54,7 +66,7 @@ spec:
                             port: 80
                         initialDelaySeconds: 30
                         periodSeconds: 15
-                    ###### 2eme methode si le httpGet ne focntionne pas 
+                    ###### 2nd method if the httpGet does not work
                     # livenessProbe:
                     #     exec:
                     #         command:
@@ -63,6 +75,8 @@ spec:
                     #             - wget --spider localhost:8080
                     #     initialDelaySeconds: 30
                     #     periodSeconds: 15
+
+                    ## Resource settings
                     resources:
                         requests:
                             memory: "10Mi"
