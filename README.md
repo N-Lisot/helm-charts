@@ -27,6 +27,7 @@ Changelog
 deno-webserver:
 
 
+0.3.1 Comment and clean code
 
 0.3.0
 
@@ -36,7 +37,9 @@ deno-webserver:
     
     Add Liveness probe to webserver
 
-0.2.2 FIX 0.2.0
+0.2.2 Add release variable
+
+0.2.1 Fix web access
 
 0.2.0
 
@@ -48,7 +51,7 @@ deno-webserver:
     
     Change MariaDB to StatefulSet
 
-0.1.1 FIX 0.1.0
+0.1.1 Fix web access
 
 0.1.0
 
